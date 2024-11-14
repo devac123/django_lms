@@ -1,6 +1,6 @@
 from django.shortcuts import render,get_object_or_404,redirect, HttpResponse
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import logout
+from django.contrib.auth import logout,login
 from django.contrib.auth.forms import PasswordResetForm,SetPasswordForm
 from django.urls import reverse
 from django.contrib.auth.models import User
@@ -9,6 +9,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
+from .forms import SignupForm
 
 # Create your views here.
 
@@ -72,7 +73,6 @@ def password_reset_confirm_view(request, uidb64, token):
 
     # Check if the token is valid for the user
     if user is not None and default_token_generator.check_token(user, token):
-        
         if request.method == 'POST':
             form = SetPasswordForm(user, request.POST)
             if form.is_valid():
@@ -95,3 +95,19 @@ def send_email(message,sender,reciever):
     recipient_list = [reciever]
 
     send_mail(subject, message, from_email, recipient_list)
+
+
+def create_account(req):
+    if req.method == 'POST':
+        form = SignupForm(req.POST)
+        if form.is_valid():
+            user = form.save()
+            login(req, user)  # Log the user in after signup (optional)
+            messages.success(req, "Signup successful. You are now logged in.")
+            return redirect('/lms/cources/')  # Redirect to a home page or another view
+        else:
+            messages.error(req, "There was an error with your signup.")
+    else:
+        form = SignupForm()
+    
+    return render(req, 'registration/create_account.html',{'form': form})

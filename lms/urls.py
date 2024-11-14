@@ -30,4 +30,6 @@ urlpatterns = [
     path('profile/', views.profile_view, name='profile'),
     path('password-reset/', views.change_password, name='change_password'),
     path('password-reset/<uidb64>/<token>/', views.password_reset_confirm_view, name='password_reset_confirm'),
+    path('create_account/', views.create_account, name='create_account'),
+    
 ]
