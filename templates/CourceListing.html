@@ -1,0 +1,70 @@
+
+
+{% extends 'base.html' %}
+{% block title %} {{ page_title }} {% endblock %}
+{% block body %}
+
+
+<div class="d-flex justify-content-between">
+<h1>All Courses</h1>
+
+  
+<div class="form-group">
+
+  <label for="exampleFormControlSelect1">Example select</label>
+  <select class="form-control" id="p_count">
+    
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+  </select>
+</div>
+</div>
+
+<div class="row">
+    {% for course in page_obj %}
+            <div class="col-lg-4 mb-4">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                  <h5 class="card-title">
+                    <a href="{% url 'course_detail' course.id %}">{{ course.title }}</a>
+                  </h5>
+                  <h6 class="card-subtitle mb-2 text-muted">
+                    <strong>Category:</strong> {{ course.category }}
+                  </h6>
+                  <p class="card-text">
+                    <strong>Instructor:</strong> {{ course.instructor.username }}<br>
+                    <strong>Start Date:</strong> {{ course.start_date|date:"M d, Y" }}<br>
+                    <strong>End Date:</strong> {{ course.end_date|date:"M d, Y" }}<br>
+                    <strong>Description:</strong> {{ course.discription|truncatewords:20 }}<br>
+                  </p>
+                  <a href="{% url 'enroll_in_course' course.id %}" class="btn btn-primary">Enroll Now</a>
+                </div>
+              </div>
+            </div>
+              
+    {% endfor %}
+            </div>
+            <div class="pagination">
+                <!-- Previous Page Link -->
+                {% if page_obj.has_previous %}
+                    <a class="mr-2" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                {% else %}
+                    <span >Previous</span>
+                {% endif %}
+            
+                <!-- Current Page Number -->
+                <span class="mr-2" >Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+            
+                <!-- Next Page Link -->
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">Next</a>
+                {% else %}
+                    <span>Next</span>
+                {% endif %}
+          </div>
+          
+
+{% endblock %}

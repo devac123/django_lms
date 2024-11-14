@@ -1,0 +1,13 @@
+<!-- lesson_detail.html -->
+{% extends 'base.html' %}
+
+{% block body %}
+  <h1>{{ lesson.title }}</h1>
+  <p>{{ lesson.content }}</p>
+
+  {% if lesson.video_url %}
+    <p>Video: <a href="{{ lesson.video_url }}" target="_blank">{{ lesson.video_url }}</a></p>
+  {% endif %}
+
+  <a href="{% url 'course_lessons' lesson.module.course.id %}">Back to course lessons</a>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %} Cource Details {% endblock %}
+
+{% block body %}
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">{{ course.title }}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">Instructor: {{ course.instructor.username }}</h6>
+    <p class="card-text">
+      <strong>Category:</strong> {{ course.category }}<br>
+      <strong>Description:</strong> {{ course.discription }}<br>
+      <strong>Start Date:</strong> {{ course.start_date|date:"M d, Y" }}<br>
+      <strong>End Date:</strong> {{ course.end_date|date:"M d, Y" }}<br>
+    </p>
+    <a href="{% url 'cources_listing' %}" class="card-link">Back to course list</a>
+    <a href="{% url 'course_lessons' course.id %}" class="card-link">Veiw Lessons</a>
+
+  </div>
+</div>
+{% endblock %}
