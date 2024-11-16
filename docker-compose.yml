@@ -11,7 +11,7 @@ services:
     ports:
       - "80:8000"  # Expose port 80 on the host to port 8000 in the container
     environment:
-      - DJANGO_SETTINGS_MODULE=lms.settings.production  # Make sure to use production settings
+      - DJANGO_SETTINGS_MODULE=lms.settings  # Make sure to use production settings
     depends_on:
       - db  # Ensure that the database service starts first
 
