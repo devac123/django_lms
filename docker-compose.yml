@@ -5,10 +5,25 @@ services:
     build: .
     command: >
       sh -c "python manage.py migrate &&
-             python manage.py runserver 0.0.0.0:8000"
+             gunicorn --bind 0.0.0.0:8000 lms.wsgi:application"
     volumes:
       - .:/app
     ports:
-      - "80:8000"
+      - "80:8000"  # Expose port 80 on the host to port 8000 in the container
     environment:
-      - DJANGO_SETTINGS_MODULE=lms.settings  # Replace with your actual settings module
+      - DJANGO_SETTINGS_MODULE=lms.settings.production  # Make sure to use production settings
+    depends_on:
+      - db  # Ensure that the database service starts first
+
+  db:
+    image: postgres:13  # Use an appropriate version of PostgreSQL
+    environment:
+      POSTGRES_DB: lms
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+    driver: local
