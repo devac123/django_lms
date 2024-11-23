@@ -5,18 +5,21 @@ services:
     build: .
     command: >
       sh -c "python manage.py migrate &&
+             python manage.py collectstatic --noinput &&
              gunicorn --bind 0.0.0.0:8000 lms.wsgi:application"
     volumes:
       - .:/app
+      - static_data:/app/staticfiles  # Store static files in a shared volume
+      - media_data:/app/media        # Store media files in a shared volume
     ports:
-      - "80:8000"  # Expose port 80 on the host to port 8000 in the container
+      - "8000:8000"  # Expose port 8000 for Django app
     environment:
-      - DJANGO_SETTINGS_MODULE=lms.settings  # Make sure to use production settings
+      - DJANGO_SETTINGS_MODULE=lms.settings
     depends_on:
-      - db  # Ensure that the database service starts first
+      - db
 
   db:
-    image: postgres:13  # Use an appropriate version of PostgreSQL
+    image: postgres:13
     environment:
       POSTGRES_DB: lms
       POSTGRES_USER: user
@@ -37,4 +40,8 @@ services:
 
 volumes:
   postgres_data:
+    driver: local
+  static_data:  # Declare static data volume
+    driver: local
+  media_data:  # Declare media data volume
     driver: local
