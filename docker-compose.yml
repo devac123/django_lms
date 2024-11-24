@@ -13,8 +13,6 @@ services:
       - media_data:/app/media        # Store media files in a shared volume
     environment:
       - DJANGO_SETTINGS_MODULE=lms.settings
-    depends_on:
-      - db  # If you're using a database, keep the db service; if not, remove it
     expose:
       - "8000"  # Expose port 8000 internally for Nginx to communicate with
 
