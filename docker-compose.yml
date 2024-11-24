@@ -30,8 +30,6 @@ services:
       - web
 
 volumes:
-  postgres_data:
-    driver: local
   static_data:  # Declare static data volume
     driver: local
   media_data:  # Declare media data volume
