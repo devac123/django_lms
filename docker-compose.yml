@@ -9,8 +9,8 @@ services:
              gunicorn --bind 0.0.0.0:8000 lms.wsgi:application"
     volumes:
       - .:/app
-      - static_data:/app/staticfiles  # Store static files in a shared volume
-      - media_data:/app/media        # Store media files in a shared volume
+      - static_data:/app/staticfiles  # Mount the volume for static files
+      - media_data:/app/media        # Mount the volume for media files
     environment:
       - DJANGO_SETTINGS_MODULE=lms.settings
     expose:
