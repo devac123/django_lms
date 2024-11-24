@@ -45,5 +45,3 @@ volumes:
     driver: local
   media_data:  # Declare media data volume
     driver: local
-
-    
