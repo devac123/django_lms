@@ -9,6 +9,7 @@ services:
              gunicorn --bind 0.0.0.0:8000 lms.wsgi:application"
     volumes:
       - .:/app
+      - static_volume:/app/staticfiles
       - static_data:/app/staticfiles  # Mount the volume for static files
       - media_data:/app/media        # Mount the volume for media files
     environment:
@@ -23,6 +24,7 @@ services:
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf  # Mount custom Nginx config
       - static_data:/usr/share/nginx/html/static  # Ensure static files are served by Nginx
+      - static_volume:/usr/share/nginx/html/static
       - media_data:/usr/share/nginx/html/media   # Ensure media files are served by Nginx
     depends_on:
       - web
