@@ -10,13 +10,13 @@ COPY requirements.txt /app/
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the current directory contents into the container at /app
-COPY . /app/
-
-# Install additional system dependencies if needed
+# Install additional system dependencies if needed (e.g., libpq-dev for PostgreSQL)
 RUN apt-get update && apt-get install -y \
     libpq-dev \
     && rm -rf /var/lib/apt/lists/*
+
+# Copy the current directory contents into the container at /app
+COPY . /app/
 
 # Expose port 8000 to the outside world (for HTTP traffic)
 EXPOSE 8000
@@ -25,5 +25,5 @@ EXPOSE 8000
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-# Run database migrations
-CMD ["sh", "-c", "python manage.py migrate && gunicorn --bind 0.0.0.0:8000 lms.wsgi:application"]
+# Run database migrations and start Gunicorn server
+CMD ["sh", "-c", "python manage.py migrate && python manage.py collectstatic --noinput && gunicorn --bind 0.0.0.0:8000 lms.wsgi:application"]

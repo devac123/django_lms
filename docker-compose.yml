@@ -5,25 +5,31 @@ services:
     build: .
     command: >
       sh -c "python manage.py migrate &&
+             python manage.py collectstatic --noinput &&
              gunicorn --bind 0.0.0.0:8000 lms.wsgi:application"
     volumes:
       - .:/app
-    ports:
-      - "80:8000"  # Expose port 80 on the host to port 8000 in the container
+      - static_data:/app/staticfiles  # Mount the volume for static files
+      - media_data:/app/media        # Mount the volume for media files
     environment:
-      - DJANGO_SETTINGS_MODULE=lms.settings  # Make sure to use production settings
-    depends_on:
-      - db  # Ensure that the database service starts first
+      - DJANGO_SETTINGS_MODULE=lms.settings
+    expose:
+      - "8000"  # Expose port 8000 internally for Nginx to communicate with
 
-  db:
-    image: postgres:13  # Use an appropriate version of PostgreSQL
-    environment:
-      POSTGRES_DB: lms
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"  # Expose port 80 on the host to port 80 in the container (for external access)
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - ./nginx.conf:/etc/nginx/nginx.conf  # Mount custom Nginx config
+      - static_data:/app/staticfiles  # Ensure static files are served by Nginx
+      - media_data:/app/media   # Ensure media files are served by Nginx
+    depends_on:
+      - web
+    restart: always    
 
 volumes:
-  postgres_data:
+  static_data:  # Declare static data volume
+    driver: local
+  media_data:  # Declare media data volume
     driver: local
