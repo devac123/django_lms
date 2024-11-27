@@ -13,6 +13,8 @@ from .forms import SignupForm
 
 # Create your views here.
 
+def home(req):
+    return render(req, 'index.html')
 
 @login_required
 def profile_view(request):

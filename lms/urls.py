@@ -23,6 +23,7 @@ admin.site.site_header = settings.SITE_HEADER
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('',views.home,name="home"),
     path('site/layout', views.layout),
     path('lms/',include('LearnHub.urls')),
     path('accounts/', include('django.contrib.auth.urls')), 
