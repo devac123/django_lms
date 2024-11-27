@@ -1,6 +1,17 @@
 version: '3.9'
 
 services:
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Persist PostgreSQL data
+
   web:
     build: .
     command: >
@@ -13,6 +24,11 @@ services:
       - media_data:/app/media        # Mount the volume for media files
     environment:
       - DJANGO_SETTINGS_MODULE=lms.settings
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    depends_on:
+    - db  
     expose:
       - "8000"  # Expose port 8000 internally for Nginx to communicate with
 
@@ -33,3 +49,5 @@ volumes:
     driver: local
   media_data:  # Declare media data volume
     driver: local
+  postgres_data:  # Declare PostgreSQL volume
+    driver: local  

@@ -81,8 +81,12 @@ WSGI_APPLICATION = 'lms.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('POSTGRES_DB'),  # The database name you set in Docker
+        'USER': os.getenv('POSTGRES_USER'), # The database user
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'), # The database password
+        'HOST': 'db', # The name of the db service in Docker Compose
+        'PORT': '5432', # PostgreSQL default port
     }
 }
 
