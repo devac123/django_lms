@@ -58,7 +58,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': ['theme/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -125,13 +125,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = 'theme/static/'
 LOGIN_REDIRECT_URL = '/profile/'
 
 STATIC_ROOT = '/app/staticfiles/'
 
 STATICFILES_DIRS  = [
-    os.path.join(BASE_DIR, 'static')
+    os.path.join(BASE_DIR, 'theme/static')
 ]
 
 MEDIA_URL = '/media/'  # This is the URL you will use to access media files
