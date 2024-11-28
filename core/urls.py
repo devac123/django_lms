@@ -1,5 +1,5 @@
 """
-URL configuration for lms project.
+URL configuration for core project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.1/topics/http/urls/
@@ -25,7 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.home,name="home"),
     path('site/layout', views.layout),
-    path('lms/',include('LearnHub.urls')),
+    path('core/',include('LearnHub.urls')),
     path('accounts/', include('django.contrib.auth.urls')), 
     path('accounts/logout', views.logout_page, name='logout'), 
     path('profile/', views.profile_view, name='profile'),
