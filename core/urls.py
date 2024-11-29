@@ -10,7 +10,6 @@ admin.site.site_header = settings.SITE_HEADER
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',HomePageView.home,name="home"),
-    path('site/layout', views.layout),
     path('accounts/', include('django.contrib.auth.urls')), 
     path('accounts/logout', views.logout_page, name='logout'), 
     path('profile/', views.profile_view, name='profile'),

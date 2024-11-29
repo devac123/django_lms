@@ -12,6 +12,7 @@ from django.conf import settings
 from django.views.generic import TemplateView
 from .forms import SignupForm
 from base.forms.ContactForm import ContactUsForm
+from . import usefulFunctions
 
 # Create your views here.
 
@@ -26,11 +27,8 @@ def profile_view(request):
 @login_required
 def logout_page(request):
     logout(request)
-    return redirect('/lms/cources/') 
+    return redirect('/') 
 
-
-def layout(req):
-    return render(req, 'admin/layout.html')
 
 
 def change_password(req):
@@ -50,9 +48,7 @@ def change_password(req):
                         f'/password-reset/{uid}/{token}/'
                     )
 
-                    receiver_email = email
-                    email_message = reset_link
-                    send_email(message=reset_link, sender=settings.EMAIL_HOST_USER, reciever=email)
+                    usefulFunctions.send_email(message=reset_link, sender=settings.EMAIL_HOST_USER, reciever=email)
 
                     alerts = {
                         'message' : 'Please check Your email We have shared password reset link with You'    
@@ -89,13 +85,6 @@ def password_reset_confirm_view(request, uidb64, token):
         return redirect('password_reset')
     
 
-def send_email(message,sender,reciever):
-    subject = 'Test Email'
-    message = message
-    from_email = sender
-    recipient_list = [reciever]
-
-    send_mail(subject, message, from_email, recipient_list)
 
 
 def create_account(req):
