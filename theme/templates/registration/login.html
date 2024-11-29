@@ -8,7 +8,7 @@
     {% endfor %}
 {% endif %}
 
-<form method="post">
+<form method="post" style="margin: 100px;">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Login</button>
