@@ -9,12 +9,11 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
+from django.views.generic import TemplateView
 from .forms import SignupForm
+from base.forms.ContactForm import ContactUsForm
 
 # Create your views here.
-
-def home(req):
-    return render(req, 'index.html')
 
 @login_required
 def profile_view(request):
