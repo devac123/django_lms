@@ -1141,6 +1141,9 @@
       text-align: center;
       margin-bottom: 25px;
   }
+  .dj_forms .login-button button,.dj_forms .login-button a{
+    margin: 0px 5px;
+  }
   
   .dj_forms .login-text {
       text-align: left;
