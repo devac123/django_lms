@@ -1,4 +1,4 @@
-from django.shortcuts import render,H
+from django.shortcuts import render,HttpResponse
 from django.contrib.auth.decorators import login_required
 from slotify.slotifyModels.SlotifyUserData import SlotifyUserData
 
@@ -7,10 +7,12 @@ from slotify.slotifyModels.SlotifyUserData import SlotifyUserData
 def SlotifyDashboard(req):
     content = {}
     user_id = req.user.id
-    data = SlotifyUserData.objects.get(user_id = user_id)
-    if (data):
-        content['user'] = data
-        return render(req,'slotify/SlotifyDashboardTest.html',data)
+    userData = SlotifyUserData.objects.get(user_id = user_id)
+    if (userData):
+        content = {
+            'data' : userData
+        }
+        return render(req,'slotify/SlotifyDashboard.html',content)
     else:
-        return render(req,'slotify/SlotifyDashboardTest.html')
+        return HttpResponse('Somthing went Wrong on Slotify dashbord')
     
