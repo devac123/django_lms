@@ -60,5 +60,29 @@
 
   <!-- Main JS File -->
   <script src="{%  static 'js/main.js' %}"></script>
+  {% if user.is_authenticated %}
+        <script> 
+            // Get the current URL
+            const currentPage = window.location.href;
+            if (currentPage.includes('/accounts/login')) {
+              
+              // Redirect to the previous page if it exists in localStorage
+              const previousPage = localStorage.getItem('previousPage');
+
+              if(previousPage){
+                window.location.href = localStorage.getItem('previousPage')
+              }
+              else{
+                window.location.href = '/'
+              }
+
+            }
+            else{
+               // Save the current page URL in localStorage for future reference
+              localStorage.setItem('previousPage', window.location.href);
+            }
+        </script> 
+        
+  {% endif %} 
 </body>
 </html>
