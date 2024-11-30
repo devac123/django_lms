@@ -11,6 +11,10 @@
 # Help: https://devel.com/color-system/
 --------------------------------------------------------------*/
 /* Fonts */
+@import url(https://unpkg.com/@webpixels/css@1.1.5/dist/index.css);
+
+/* Bootstrap Icons */
+@import url("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.4.0/font/bootstrap-icons.min.css");
 :root {
     --default-font: "Open Sans",  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --heading-font: "Jost",  sans-serif;
@@ -976,6 +980,14 @@
     transform: scale(1.1);
   }
   
+  /*--------------------------------------------------------------
+  # Slotify app section
+  --------------------------------------------------------------*/
+
+  .navbar-vertical.navbar-expand-lg{
+    z-index: 1 !important;
+  }
+
   /*--------------------------------------------------------------
   # About Section
   --------------------------------------------------------------*/

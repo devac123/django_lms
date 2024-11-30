@@ -1,14 +1,35 @@
 {% extends 'base.html' %}
 {% block title %} devl {% endblock %}
 
-  {% block body %}
-     <!-- Hero Section -->
-     <section id="apps" class="apps first_section">
-        <div class="container">
-            <div class="row gy-4">
-                <h1>Apps</h1>
-            </div>
+{% block body %}
+<!-- Hero Section -->
+<section id="apps" class="apps first_section">
+    <div class="container">
+        <div class="row gy-4">
+            <h1>Apps</h1>
         </div>
-                
-     </section>
-  {% endblock %}   
+
+        <!-- apps card listing -->
+        <div class="row mt-3">
+            <!-- apps card item -->
+            <div class="col-4 ">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Slotify</h5>
+                        <p class="card-text">Slotify is a modern booking app that lets users effortlessly book time
+                            slots, reserve spaces, or schedule appointments. Designed for flexibility, it suits various
+                            needs like gym classes, doctor visits, co-working spaces, and more.
+                        </p>
+                        <a href="/apps/slotify" class="btn btn-primary">Try this app</a>
+                    </div>
+                </div>
+            </div>
+            <!-- END apps card item -->
+
+        </div>
+        <!-- End apps card listing -->
+
+    </div>
+
+</section>
+{% endblock %}
