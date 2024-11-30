@@ -8,5 +8,6 @@ def SlotifyDashboard(req):
     content = {}
     user_id = req.user.id
     data = SlotifyUserData.objects.get(user_id = user_id)
-    content['user'] = data
+    if (data):
+        content['user'] = data
     return render(req,'slotify/SlotifyDashboard.html',content)
