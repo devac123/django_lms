@@ -24,7 +24,7 @@
   <link href="{%  static 'vendor/aos/aos.css' %}" rel="stylesheet">
   <link href="{%  static 'vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
   <link href="{%  static 'vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
-
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   <!-- Main CSS File -->
   <link href="{%  static 'css/main.css' %}" rel="stylesheet">
 
@@ -37,8 +37,10 @@
   ======================================================== -->
 </head>
 <body>
-    {% include 'Header.html'   %}  
+    {% include 'Header.html'   %} 
+    <main class="main">
     {% block body %} {% endblock %}
+  </main> 
     {% include 'Footer.html'   %}  
 
      <!-- Scroll Top -->
