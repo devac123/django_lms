@@ -3,6 +3,7 @@ from django.urls import path,include
 from . import views, settings
 from django.conf.urls.static import static
 from base.views import HomePageView
+from base.views import AppsPageView
 
 admin.site.site_title = settings.SITE_TITLE
 admin.site.site_header = settings.SITE_HEADER
@@ -11,6 +12,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',HomePageView.home,name="home"),
     path('accounts/', include('django.contrib.auth.urls')), 
+    path('apps/', AppsPageView.Apps, name="app"),
     path('accounts/logout', views.logout_page, name='logout'), 
     path('profile/', views.profile_view, name='profile'),
     path('password-reset/', views.change_password, name='change_password'),
