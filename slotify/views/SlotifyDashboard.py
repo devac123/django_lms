@@ -1,6 +1,9 @@
 from django.shortcuts import render,HttpResponse
 from django.contrib.auth.decorators import login_required
 from slotify.slotifyModels.SlotifyUserData import SlotifyUserData
+from slotify.slotifyModels.SlotifyServices import SlotifyService
+from slotify.slotifyModels.SlotifyServiceSlot import SlotifyServiceSlot
+from datetime import datetime
 
 
 @login_required
