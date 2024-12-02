@@ -23,7 +23,7 @@ urlpatterns = [
 
 # slotify booking routs
 urlpatterns += [
-    path('apps/slotify', include('slotify.slotifyUrls'))
+    path('apps/', include('slotify.slotifyUrls'))
 ]
 
 if settings.DEBUG:

@@ -27,14 +27,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   <!-- Main CSS File -->
   <link href="{%  static 'css/main.css' %}" rel="stylesheet">
-
-  <!-- =======================================================
-  * Template Name: Devel
-  * Template URL: https://devel.com/Devel-free-bootstrap-html-template-corporate/
-  * Updated: Aug 07 2024 with Bootstrap v5.3.3
-  * Author: devel.com
-  * License: https://devel.com/license/
-  ======================================================== -->
+  {% block css %} {% endblock %}
 </head>
 <body>
     {% include 'Header.html'   %} 
@@ -60,29 +53,27 @@
 
   <!-- Main JS File -->
   <script src="{%  static 'js/main.js' %}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   {% if user.is_authenticated %}
-        <script> 
-            // Get the current URL
-            const currentPage = window.location.href;
-            if (currentPage.includes('/accounts/login')) {
-              
-              // Redirect to the previous page if it exists in localStorage
-              const previousPage = localStorage.getItem('previousPage');
-
-              if(previousPage){
-                window.location.href = localStorage.getItem('previousPage')
-              }
-              else{
-                window.location.href = '/'
-              }
-
-            }
-            else{
-               // Save the current page URL in localStorage for future reference
-              localStorage.setItem('previousPage', window.location.href);
-            }
-        </script> 
-        
-  {% endif %} 
+  <script> 
+      // Get the current URL
+      const currentPage = window.location.href;
+      if (currentPage.includes('/accounts/login')) {
+        // Redirect to the previous page if it exists in localStorage
+        const previousPage = localStorage.getItem('previousPage');
+        if(previousPage){
+          window.location.href = localStorage.getItem('previousPage')
+        }
+        else{
+          window.location.href = '/'
+        }
+      }
+      else{
+         // Save the current page URL in localStorage for future reference
+        localStorage.setItem('previousPage', window.location.href);
+      }
+  </script> 
+{% endif %} 
+  {% block script %} {% endblock %}
 </body>
 </html>
