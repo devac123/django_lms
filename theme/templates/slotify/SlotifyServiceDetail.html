@@ -1,45 +1,40 @@
 {% extends 'base.html' %}
 {% block title %} {{data.serviceDetail}} {% endblock %}
 {% block body %}
-<link href="https://cdn.jsdelivr.net/npm/mobiscroll@3.0.0-beta6/css/mobiscroll.android-holo-light.min.css" rel="stylesheet">
 <section class="first_section">
     <div class="container">
         <h1>{{data.serviceDetail}}</h1>
         <div class="row">
             <div id="calendar"></div>
-            <!-- {{data.slots}} -->
         </div>
     </div>
 </section>
 {% endblock %}
 
 {% block script %} 
-<!-- <script src="https://cdn.jsdelivr.net/npm/mobiscroll@3.0.0-beta6/js/mobiscroll.scroller.min.js"></script> -->
 <script>
-    $(document).ready(function () {
-        // Slot data from Django view
-        const slots = `{{ data.slots|safe }}`;
-
-        // Initialize Mobiscroll calendar
-        mobiscroll.eventcalendar('#calendar', {
-            view: {
-                calendar: { type: 'week' }, // Weekly view
-                eventList: { type: 'day' }, // Day-wise event list
-            },
-            data: slots, // Use slot data passed from Django
-            colors: [
-                { backgroundColor: 'green', textColor: '#fff' },
-                { backgroundColor: 'red', textColor: '#fff' }
-            ],
-            renderEvent: function (event) {
-                // Custom render for events
-                return `
-                    <div style="background-color: ${event.color}; color: white; padding: 5px; border-radius: 5px;">
-                        ${event.title} <br> ${event.start} - ${event.end}
-                    </div>
-                `;
-            },
+   var events = [];
+   
+   $.ajax({
+        url: '/apps/slots/{{data.id}}/',
+        method: "GET",
+        success: function (response) {
+            console.log(response);
+            // displaySlots(response.slots);
+        },
+        error: function (xhr, status, error) {
+            console.error("Error fetching slots:", error);
+        }
+    });             
+   fetch('/slots/{{data.id}}')
+     $(document).ready(function() {
+            $('#calendar').fullCalendar({
+                events: events,
+                eventClick: function(event) {
+                    alert("You clicked on the slot " + event.title);
+                    // You can also open a modal to book the slot here
+                }
+            });
         });
-    });
 </script>
 {% endblock %}
