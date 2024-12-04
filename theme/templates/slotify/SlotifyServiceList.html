@@ -6,34 +6,36 @@
     <div class="container">
         <h2>List of Services</h2>
         <div class="row">
-            <table class="table table-bordered table-striped">
-                <thead class="table-light">
-                    <tr>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Duration (minutes)</th>
-                        <th>Price</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for service in data.serviceList %}
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead class="table-light">
                         <tr>
-                            <td>{{ service.name }}</td>
-                            <td>{{ service.description }}</td>
-                            <td>{{ service.duration }}</td>
-                            <td>${{ service.price }}</td>
-                            <td>
-                                <a href="{% url 'service_details' service.id %}" class="btn btn-danger">View</a>
-                            </td>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Duration (minutes)</th>
+                            <th>Price</th>
+                            <th>Action</th>
                         </tr>
-                    {% empty %}
-                        <tr>
-                            <td colspan="4">No services available</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {% for service in data.serviceList %}
+                            <tr>
+                                <td>{{ service.name }}</td>
+                                <td>{{ service.description }}</td>
+                                <td>{{ service.duration }}</td>
+                                <td>${{ service.price }}</td>
+                                <td>
+                                    <a href="{% url 'service_details' service.id %}" class="btn btn-danger">View</a>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="4">No services available</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </section>

@@ -11,30 +11,51 @@
 </section>
 {% endblock %}
 
-{% block script %} 
+{% block script %}
 <script>
-   var events = [];
-   
-   $.ajax({
-        url: '/apps/slots/{{data.id}}/',
-        method: "GET",
-        success: function (response) {
-            console.log(response);
-            // displaySlots(response.slots);
-        },
-        error: function (xhr, status, error) {
-            console.error("Error fetching slots:", error);
-        }
-    });             
-   fetch('/slots/{{data.id}}')
-     $(document).ready(function() {
-            $('#calendar').fullCalendar({
-                events: events,
-                eventClick: function(event) {
-                    alert("You clicked on the slot " + event.title);
-                    // You can also open a modal to book the slot here
-                }
+    
+    $.ajax({
+    url: '/apps/slots/{{data.id}}/',
+    method: "GET",
+    success: function (response) {
+        events = [];
+        $.each(response.slots, function(key, value) {
+            events.push({
+                id: value.id,
+                title: value.service_name,      // Adjust according to your API's data structure
+                start: new Date(value.start_time).toISOString(),  // Ensure the start date/time is in ISO format
+                end: value.end_time ? new Date(value.end_time).toISOString() : null, // Optional end time
+                is_available: value.is_available,
+                url: `/apps/book/{{data.id}}/slot/`+ value.id
             });
         });
+      
+        // Initialize the calendar
+        $('#calendar').fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            },
+            initialView: 'dayGridMonth', // Default view
+            editable: true,             // Enable drag-and-drop
+            events: events,
+            selectable: true,           // Allow selection of dates
+            selectHelper: true,
+            eventRender: function(event, element) {
+                if (!event.is_available) {
+                    element.css('background-color', '#FF0000'); // Mark unavailable slots in red
+                }
+            },
+            eventClick: function(event) {
+                window.location.href = event.url;
+            }
+        });
+    },
+    error: function (xhr, status, error) {
+        console.error("Error fetching slots:", error);
+    }
+});
+
 </script>
 {% endblock %}
