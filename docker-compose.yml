@@ -17,7 +17,7 @@ services:
     command: >
       sh -c "python manage.py migrate &&
              python manage.py collectstatic --noinput &&
-             daphne --bind 0.0.0.0:8000 core.asgi:application"
+             daphne --bind 0.0.0.0 --port 8000 core.asgi:application"
             
     volumes:
       - .:/app
