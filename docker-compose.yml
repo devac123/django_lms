@@ -17,7 +17,8 @@ services:
     command: >
       sh -c "python manage.py migrate &&
              python manage.py collectstatic --noinput &&
-             gunicorn --bind 0.0.0.0:8000 core.wsgi:application"
+             daphne --bind 0.0.0.0:8000 core.asgi:application"
+            
     volumes:
       - .:/app
       - static_data:/app/staticfiles  # Mount the volume for static files
