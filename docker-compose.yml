@@ -17,7 +17,8 @@ services:
     command: >
       sh -c "python manage.py migrate &&
              python manage.py collectstatic --noinput &&
-             gunicorn --bind 0.0.0.0:8000 core.wsgi:application"
+             daphne --bind 0.0.0.0 --port 8000 core.asgi:application"
+            
     volumes:
       - .:/app
       - static_data:/app/staticfiles  # Mount the volume for static files
@@ -29,6 +30,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     depends_on:
     - db  
+    - redis
     expose:
       - "8000"  # Expose port 8000 internally for Nginx to communicate with
 
@@ -42,7 +44,12 @@ services:
       - media_data:/app/media   # Ensure media files are served by Nginx
     depends_on:
       - web
-    restart: always    
+    restart: always   
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"   
 
 volumes:
   static_data:  # Declare static data volume
