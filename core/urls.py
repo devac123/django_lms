@@ -10,7 +10,8 @@ admin.site.site_header = settings.SITE_HEADER
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',HomePageView.home,name="home"),
+    path('home/',HomePageView.home,name="home"),
+    path('', include('todo_app.urls')),
     path('accounts/', include('django.contrib.auth.urls')), 
     path('apps/', AppsPageView.Apps, name="app"),
     path('accounts/logout', views.logout_page, name='logout'), 

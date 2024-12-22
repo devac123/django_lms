@@ -94,7 +94,7 @@ def create_account(req):
             user = form.save()
             login(req, user)  # Log the user in after signup (optional)
             messages.success(req, "Signup successful. You are now logged in.")
-            return redirect('/lms/cources/')  # Redirect to a home page or another view
+            return redirect('/')  # Redirect to a home page or another view
         else:
             messages.error(req, "There was an error with your signup.")
     else:

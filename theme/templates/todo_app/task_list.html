@@ -1,0 +1,159 @@
+{% extends 'todo_base.html' %}
+{% block title %} {{ 'Task Listing' }} {% endblock %}
+{% block body %}
+<style>
+    .dropdown-menu .dropdown-item {
+    color: #212529; /* Default text color */
+    background-color: transparent; /* Default background */
+}
+
+tr {
+    overflow: visible !important;
+}
+/* Hover effect */
+.dropdown-menu .dropdown-item:hover {
+    background-color: #007bff; /* Blue background on hover */
+    color: white; /* White text color on hover */
+}
+    @media (max-width: 768px) {
+    .todo_form_search_button {
+        margin-top: 20px;  /* Adjust this value as needed */
+    }
+}
+.dropdown-menu {
+        max-height: 150px;
+        overflow-y: auto;
+    }
+    </style>
+<section class="first_section">
+    <div class="container">    
+        <div class="d-flex justify-content-between">
+            <h1>All Tasks</h1>
+            <a href="{% url 'add_task' %}">Add New Task</a>
+        </div>
+        <form class="" method="get">
+        <div class="task_filter row">
+            <div class="col-lg-4">
+                <input class="form-control mb-2" name="task-title" type="text">
+            </div>
+            <div class="col-lg-4">
+                <select class="form-control" name="status" id="task_status_filter">
+                    <option value="Pending">Pending</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Closed">Closed</option>
+                    <option value="Active">Active</option>
+                </select>
+            </div>
+            <div class="col-lg-2 todo_form_search_button">
+                <button type="click" id="task_search" class="btn btn-info">Search Task</button>
+            </div>
+            <div class="col-lg-2 todo_form_search_button">
+                <button type="click" id="clear_search" class="btn btn-info">Clear Search</button>
+            </div>
+        </div>
+    </form>
+    <div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Task Title</th>
+                <th scope="col">Description</th>
+                <th scope="col">Status</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+            <tr class="task" data-title="{{ task.title }}" data-status="{{ task.status }}">
+                <td><strong>{{ task.title }}</strong></td>
+                <td>
+                    <!-- Truncated Description -->
+                    <span class="task-description">
+                        {% if task.description %}
+                            {{ task.description|truncatewords:10 }} <!-- Show first 10 words -->
+                        {% else %}
+                            No description available
+                        {% endif %}
+                    </span>
+                </td>
+                <td><span class="task-status">{% if task.status %}{{ task.status }}{% endif %}</span></td>
+                <td>
+                    <!-- Dropdown for actions -->
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            Actions
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li><a class="dropdown-item" href="{% url 'update_task' task.id %}">Edit</a></li>
+                            <li><a class="dropdown-item" href="{% url 'delete_task' task.id %}">Delete</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+    </div>
+</section>
+
+{% endblock %}
+
+
+
+
+{% block script %}
+<script>
+$(document).ready(function () {
+    // Function to get a query parameter by name
+    function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param); // Returns the value of the parameter or null if not present
+    }
+
+    // Get query parameters
+    const taskTitle = getQueryParam("task-title");
+    const status = getQueryParam("status");
+
+    // Filter and display matching tasks
+    $(".task").each(function () {
+        const taskText = $(this).attr('data-title').toLowerCase();
+        const taskStatus = $(this).attr("data-status").toLowerCase();
+        
+        
+        const matchesTitle = !taskTitle || taskText.includes(taskTitle.toLowerCase());
+        const matchesStatus = !status || taskStatus === status.toLowerCase();
+
+        // Show/Hide tasks based on match
+        if (matchesTitle && matchesStatus) {
+            $(this).show();
+        } else {
+            $(this).hide();
+        }
+
+    });
+
+    // Set the input fields with query parameter values
+    if (taskTitle) {
+        $("input[name='task-title']").val(taskTitle);
+    }
+    if (status) {
+        $("#task_status_filter").val(status);
+    }
+});
+
+ $("#clear_search").on("click", function () {
+        // Clear the filter input fields
+        $("input[name='task-title']").val("");
+        $("#task_status_filter").val("");
+
+        // Show all tasks
+        $(".task").show();
+
+        // Optionally, clear the URL query parameters (if you want to reset the URL too)
+        window.history.pushState({}, document.title, window.location.pathname);
+    });
+
+</script>
+{% endblock %}
+
