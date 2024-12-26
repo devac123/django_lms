@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<section  class="first_section">
+    <!-- End Section Title -->
+    <div class="container">
+        <div class="row gy-4">
+        <h1>Upload an Image</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <input class="form-control" type="file" name="image">
+            </div>
+            <div class="form-group">
+            <button class="form-control" type="submit"> Click </button>
+            </div>
+        </form>
+
+        <h2>Base64 Output:</h2>
+        <textarea id="base64-box" readonly></textarea>
+        <!-- Copy Button -->
+        <button id="copy-btn">Copy to Clipboard</button>
+        <h2>Preview:</h2>
+        <div id="preview"></div>
+    </div>
+    </div>
+</section>
+{% endblock %}
+{% block script %}
+<script>
+    try {
+        let base64 = `{{ base64_image }}`
+        const preview = document.querySelector('#preview');
+        const textarea = document.querySelector('#base64-box')
+        const copyBtn = document.querySelector('#copy-btn');
+
+
+        if (textarea) {
+            textarea.value = base64; // Set the value of the textarea
+            console.log(`{{image}}`)
+        }
+
+        copyBtn.addEventListener('click', () => {
+            textarea.select();
+            document.execCommand('copy');
+            alert('Base64 string copied to clipboard!');
+        });
+
+    } catch (error) {
+        console.log(error);
+    }
+</script>
+{% endblock %}
