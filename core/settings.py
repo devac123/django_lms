@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework','base','slotify',
-    'chat','channels','basic_services'
+    'chat','channels','basic_services','todo_app'
+
 ]
 
 ASGI_APPLICATION = 'core.asgi.application'
@@ -138,7 +139,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'theme/static/'
-LOGIN_REDIRECT_URL = '/profile/'
+# LOGIN_REDIRECT_URL = '/profile/'
 
 STATIC_ROOT = '/app/staticfiles/'
 
