@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework','base','slotify',
-    'chat','channels','todo_app'
+    'chat','channels','basic_services','todo_app'
+
 ]
 
 ASGI_APPLICATION = 'core.asgi.application'

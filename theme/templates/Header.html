@@ -10,7 +10,11 @@
       <ul>
         <li><a href="/#hero" class="active">Home</a></li>
         <li><a href="/#about">About</a></li>
-        <li><a href="/#services">Services</a></li>
+        <li class="dropdown"><a href="#"><span>Services</span><i class="bi bi-chevron-down toggle-dropdown"></i></a>
+          <ul>
+            <li><a href="{% url 'img_to_base64' %}">Img to Base64</a></li>
+          </ul>
+        </li>
         <li><a href="/#portfolio">Portfolio</a></li>
         <li><a href="/#team">Team</a></li>
         <li><a href="/#pricing">Pricing</a></li>
